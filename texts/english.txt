@@ -1,0 +1,36 @@
+Hello from Tver State Technical University!
+
+This is test text in English for learning HTTP requests.
+
+What is HTTP?
+HTTP (HyperText Transfer Protocol) is the foundation of the web. Every time you open a site, your browser sends HTTP requests.
+
+Request example:
+GET /index.html HTTP/1.1
+Host: localhost:4443
+User-Agent: Mozilla/5.0 (Windows NT 10.0)
+Accept: text/html,application/xhtml+xml
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+Response example:
+HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Length: 785
+Date: Thu, 03 Sep 2026 20:10:00 GMT
+
+<body>Hello World</body>
+
+HTTPS = HTTP + TLS encryption. The "S" means Secure. Port 443 instead of 80. Certificate proves server identity.
+
+Status codes:
+200 OK - success
+301 Moved Permanently - redirect
+404 Not Found - no such page
+500 Internal Server Error - server bug
+403 Forbidden - no access
+502 Bad Gateway
+
+Try to open Developer Tools (F12) -> Network tab -> reload page -> see all HTTP requests your browser makes! You will see requests for HTML, CSS, images, JS, etc.
+
+Good luck, IT group! 🚀

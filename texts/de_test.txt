@@ -1,0 +1,4 @@
+Deutscher Testtext für HTTP.
+Technische Universität Twer — TSTU.
+Fakultät für Informationstechnologie.
+Umlaute: ä ö ü ß — UTF-8 Test

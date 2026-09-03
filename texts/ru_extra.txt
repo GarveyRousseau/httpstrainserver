@@ -1,0 +1,10 @@
+Дополнительный русский текст для теста HTTPS и кириллицы.
+Тверской Государственный Технический Университет — ТвГТУ.
+Факультет Информационных Технологий — ФИТ.
+HTTP/HTTPS, TCP, TLS, сертификаты, заголовки.
+Пример запроса:
+GET /texts/ru_extra.txt HTTP/1.1
+Host: localhost:4443
+User-Agent: Mozilla/5.0
+Accept: text/plain
+Accept-Language: ru-RU,ru;q=0.9

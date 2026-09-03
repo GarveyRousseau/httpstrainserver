@@ -1,0 +1,20 @@
+{
+  "university": "Tver State Technical University",
+  "city": "Tver",
+  "group": "IT",
+  "students": [
+    {"id": 1, "name": "Иван Иванов", "role": "student", "lang": "ru"},
+    {"id": 2, "name": "Petr Petrov", "role": "student", "lang": "en"},
+    {"id": 3, "name": "Anna Smirnova", "role": "student", "lang": "ru"}
+  ],
+  "http_examples": {
+    "request": "GET /data/sample.json HTTP/1.1",
+    "headers": {
+      "Host": "localhost:4443",
+      "Accept": "application/json"
+    },
+    "status": 200
+  },
+  "test_data": [1, 2, 3, 4, 5, 100, 256, 1024],
+  "message": "Этот JSON для теста HTTP - открой в браузере https://localhost:4443/data/sample.json"
+}

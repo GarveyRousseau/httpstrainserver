@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ДатаХост — HTTP Lab / TSTU · Dark</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* DataHost overrides — keep dark theme but own identity */
+.hero-data{padding:110px 18px 28px;max-width:1100px;margin:0 auto}
+.hero-data h1{font-family:Unbounded;font-weight:900;font-size:clamp(26px,6vw,64px);line-height:1;text-transform:uppercase}
+.hero-data h1 span{color:#38bdf8}
+.sub{color:#aaa;max-width:700px;line-height:1.6;margin-top:14px}
+.stats{max-width:1100px;margin:18px auto;padding:0 18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:2px;background:#222;border:2px solid #222}
+.stat{background:#0f0f0f;padding:14px;text-align:center}
+.stat b{display:block;font-family:Unbounded;font-size:22px;color:#fff}
+.stat span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#666}
+.host-grid{max-width:1100px;margin:24px auto;padding:0 18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.host{border:2px solid #222;background:#111;padding:16px}
+.host h2{font-family:Unbounded;font-weight:700;font-size:15px;text-transform:uppercase;margin-bottom:6px}
+.host h2 i{opacity:.3;font-style:normal;margin-right:6px}
+.host p{color:#888;font-size:13px;line-height:1.5;margin-bottom:10px}
+.host pre{margin-top:8px}
+.mini-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.mini-gallery img{width:100%;height:80px;object-fit:cover;border:1px solid #222}
+.file-list{list-style:none}
+.file-list li{border-bottom:1px solid #222;padding:7px 0;display:flex;justify-content:space-between;gap:8px;font-size:13px}
+.file-list li code{color:#ddd}
+.file-list li a{color:#38bdf8;text-decoration:none}
+.tag{font-family:Unbounded;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 6px;border:1px solid #333;color:#888}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <button class="burger" id="burger"><span></span><span></span><span></span></button>
+  <div class="header-title"><a href="#"><small>ТвГТУ · ФИТ</small>ДАТАХОСТ // HTTP LAB</a></div>
+  <div class="header-logo"><img src="images/logo.png" alt="logo" style="height:36px"></div>
+  <nav class="dropdown" id="dropdown">
+    <a href="#images"><i>01</i>Image Host</a>
+    <a href="#texts"><i>02</i>Text Host</a>
+    <a href="#videos"><i>03</i>Video Host</a>
+    <a href="#api"><i>04</i>API Host</a>
+    <a href="#files"><i>05</i>File Host</a>
+    <a href="#howto"><i>06</i>How to test</a>
+  </nav>
+</header>
+
+<div class="hero-data">
+  <div style="display:inline-flex;gap:8px;align-items:center;margin-bottom:10px"><span style="width:10px;height:10px;background:#22c55e;border-radius:50%;display:inline-block;animation:blink 1s steps(1) infinite"></span><span style="font-family:Unbounded;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#22c55e">LIVE HTTPS :4443 — self-signed cert.pem</span></div>
+  <h1>Сайт — <span>дата-хост</span><br>для HTTP запросов</h1>
+  <p class="sub">Не гид первокурсника, а <b style="color:#fff">хостинг тестовых данных</b>. Картинки, тексты RU/EN, видео, JSON/XML/CSV — всё <b style="color:#fff">hosted локально</b> на этом сервере и отдаётся по <b style="color:#fff">HTTPS</b>. Каждый клик = <code>GET /path HTTP/1.1</code> в консоли. Открой <b style="color:#fff">F12 → Network</b>.</p>
+  <p style="margin-top:10px"><span class="badge">20 images</span> <span class="badge">21 texts</span> <span class="badge">2 videos 947KB</span> <span class="badge">9 data files</span> <span class="badge">dark theme</span></p>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>20</b><span>Images · jpg/png</span></div>
+  <div class="stat"><b>21</b><span>Texts · RU EN DE FR ZH</span></div>
+  <div class="stat"><b>2</b><span>Videos · mp4</span></div>
+  <div class="stat"><b>9</b><span>Data · json xml yaml</span></div>
+  <div class="stat"><b>3MB</b><span>Total hosted</span></div>
+  <div class="stat"><b>55</b><span>Files via HTTPS</span></div>
+</div>
+
+<div class="ticker"><div class="ticker-track">
+  <span>ДАТАХОСТ — curl -k https://localhost:4443/images/tver1.jpg — curl -k https://localhost:4443/texts/russian.txt — curl -k https://localhost:4443/data/large.json — curl -k https://localhost:4443/videos/sample.mp4 —&nbsp;</span>
+  <span>ДАТАХОСТ — curl -k https://localhost:4443/images/tver1.jpg — curl -k https://localhost:4443/texts/russian.txt — curl -k https://localhost:4443/data/large.json — curl -k https://localhost:4443/videos/sample.mp4 —&nbsp;</span>
+</div></div>
+
+<div class="host-grid">
+
+  <!-- IMAGE HOST -->
+  <section class="host" id="images" style="grid-column:span 2">
+    <h2><i>01</i> Image Host — <span style="color:#38bdf8">/images/</span></h2>
+    <p>20 файлов hosted локально (скачаны, не внешние ссылки). Каждый — отдельный <code>GET image/jpeg</code>. Проверь <code>Content-Type</code> и <code>Content-Length</code>.</p>
+    <div class="mini-gallery">
+      <a href="images/tver1.jpg" target="_blank"><img src="images/tver1.jpg" loading="lazy"></a>
+      <a href="images/tver2.jpg" target="_blank"><img src="images/tver2.jpg" loading="lazy"></a>
+      <a href="images/city.jpg" target="_blank"><img src="images/city.jpg" loading="lazy"></a>
+      <a href="images/wide.jpg" target="_blank"><img src="images/wide.jpg" loading="lazy"></a>
+      <a href="images/nature1.jpg" target="_blank"><img src="images/nature1.jpg" loading="lazy"></a>
+      <a href="images/nature2.jpg" target="_blank"><img src="images/nature2.jpg" loading="lazy"></a>
+      <a href="images/tech.jpg" target="_blank"><img src="images/tech.jpg" loading="lazy"></a>
+      <a href="images/logo.png" target="_blank"><img src="images/logo.png" loading="lazy"></a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:6px">
+      <a href="images/extra1.jpg" target="_blank"><img src="images/extra1.jpg" loading="lazy" style="height:70px;width:100%;object-fit:cover;border:1px solid #222"></a>
+      <a href="images/extra2.jpg" target="_blank"><img src="images/extra2.jpg" loading="lazy" style="height:70px;width:100%;object-fit:cover;border:1px solid #222"></a>
+      <a href="images/extra3.jpg" target="_blank"><img src="images/extra3.jpg" loading="lazy" style="height:70px;width:100%;object-fit:cover;border:1px solid #222"></a>
+      <a href="images/extra4.jpg" target="_blank"><img src="images/extra4.jpg" loading="lazy" style="height:70px;width:100%;object-fit:cover;border:1px solid #222"></a>
+      <a href="images/extra5.jpg" target="_blank"><img src="images/extra5.jpg" loading="lazy" style="height:70px;width:100%;object-fit:cover;border:1px solid #222"></a>
+      <a href="images/extra6.jpg" target="_blank"><img src="images/extra6.jpg" loading="lazy" style="height:70px;width:100%;object-fit:cover;border:1px solid #222"></a>
+      <a href="images/extra7.jpg" target="_blank"><img src="images/extra7.jpg" loading="lazy" style="height:70px;width:100%;object-fit:cover;border:1px solid #222"></a>
+      <a href="images/extra8.jpg" target="_blank"><img src="images/extra8.jpg" loading="lazy" style="height:70px;width:100%;object-fit:cover;border:1px solid #222"></a>
+    </div>
+    <ul class="file-list" style="margin-top:10px">
+      <li><code>GET /images/tver1.jpg</code> <a href="images/tver1.jpg" target="_blank">45KB →</a></li>
+      <li><code>GET /images/wide.jpg</code> <a href="images/wide.jpg" target="_blank">62KB 1200×400 →</a></li>
+      <li><code>GET /images/extra12.jpg</code> <a href="images/extra12.jpg" target="_blank">30KB →</a></li>
+    </ul>
+    <pre>curl -k -I https://localhost:4443/images/city.jpg
+# Content-Type: image/jpeg | Content-Length: 46827</pre>
+  </section>
+
+  <!-- TEXT HOST -->
+  <section class="host" id="texts">
+    <h2><i>02</i> Text Host — <span style="color:#38bdf8">/texts/</span></h2>
+    <p>21 файл — RU/EN/DE/FR/ZH — тест <code>UTF-8</code>, кириллицы, <code>text/plain</code>.</p>
+    <ul class="file-list">
+      <li><code>russian.txt</code> <span class="tag">RU 1.7KB</span> <a href="texts/russian.txt" target="_blank">open</a></li>
+      <li><code>ru_extra.txt</code> <span class="tag">RU</span> <a href="texts/ru_extra.txt" target="_blank">open</a></li>
+      <li><code>english.txt</code> <span class="tag">EN 1.1KB</span> <a href="texts/english.txt" target="_blank">open</a></li>
+      <li><code>en_extra.txt</code> <span class="tag">EN</span> <a href="texts/en_extra.txt" target="_blank">open</a></li>
+      <li><code>de_test.txt</code> <span class="tag">DE äöü</span> <a href="texts/de_test.txt" target="_blank">open</a></li>
+      <li><code>big.txt</code> <span class="tag">55KB 1k lines</span> <a href="texts/big.txt" target="_blank">open</a></li>
+      <li><code>lorem.txt</code> <span class="tag">lorem</span> <a href="texts/lorem.txt" target="_blank">open</a></li>
+    </ul>
+    <p style="margin-top:8px;font-size:12px;color:#666">+ ru_1/2/3, en_1/2/3, de_1/2/3, fr_1/2/3, zh_1/2/3 — много мелких файлов для множества запросов</p>
+    <pre>curl -k https://localhost:4443/texts/russian.txt
+curl -k https://localhost:4443/texts/big.txt | wc -c</pre>
+  </section>
+
+  <!-- VIDEO HOST -->
+  <section class="host" id="videos">
+    <h2><i>03</i> Video Host — <span style="color:#38bdf8">/videos/</span></h2>
+    <p>2 × MP4 hosted локально. Браузер шлёт <code>Range: bytes=0-</code>, сервер отвечает <code>206</code> или <code>200</code>.</p>
+    <video controls preload="metadata" poster="images/tver1.jpg" style="width:100%;border:1px solid #222;background:#000"><source src="videos/sample.mp4" type="video/mp4"></video>
+    <ul class="file-list">
+      <li><code>sample.mp4</code> <span class="tag">947KB</span> <a href="videos/sample.mp4" target="_blank">direct</a></li>
+      <li><code>sample2.mp4</code> <span class="tag">947KB copy</span> <a href="videos/sample2.mp4" target="_blank">direct</a></li>
+    </ul>
+    <pre>curl -k -I https://localhost:4443/videos/sample.mp4
+# Content-Type: video/mp4 | Content-Length: 969201</pre>
+  </section>
+
+  <!-- API HOST -->
+  <section class="host" id="api">
+    <h2><i>04</i> API Host — <span style="color:#38bdf8">/data/</span></h2>
+    <p>JSON / CSV / XML / YAML — разные <code>Content-Type</code> для тестов API.</p>
+    <ul class="file-list">
+      <li><code>sample.json</code> <span class="tag">json 694B</span> <a href="data/sample.json" target="_blank">open</a></li>
+      <li><code>large.json</code> <span class="tag">json 8KB 100 items</span> <a href="data/large.json" target="_blank">open</a></li>
+      <li><code>schedule.json</code> <span class="tag">json 323B</span> <a href="data/schedule.json" target="_blank">open</a></li>
+      <li><code>users.csv</code> <span class="tag">csv 281B</span> <a href="data/users.csv" target="_blank">open</a></li>
+      <li><code>config.xml</code> <span class="tag">xml 188B</span> <a href="data/config.xml" target="_blank">open</a></li>
+      <li><code>data.yaml</code> <span class="tag">yaml 128B</span> <a href="data/data.yaml" target="_blank">open</a></li>
+    </ul>
+    <pre>curl -k https://localhost:4443/data/sample.json -i
+curl -k https://localhost:4443/data/users.csv</pre>
+  </section>
+
+  <!-- FILE HOST -->
+  <section class="host" id="files">
+    <h2><i>05</i> File Host — <span style="color:#38bdf8">/data/</span> binaries</h2>
+    <p>Бинарные типы: <code>pdf</code>, <code>zip</code>, <code>bin</code>, <code>mp3</code> — тест <code>octet-stream</code> и download.</p>
+    <ul class="file-list">
+      <li><code>random.bin</code> <span class="tag">100KB</span> <a href="data/random.bin" target="_blank">download</a></li>
+      <li><code>dummy.pdf</code> <span class="tag">pdf 121B</span> <a href="data/dummy.pdf" target="_blank">open</a></li>
+      <li><code>archive.zip</code> <span class="tag">zip 20KB</span> <a href="data/archive.zip" target="_blank">download</a></li>
+      <li><code>audio_sample.mp3</code> <span class="tag">mp3 50KB</span> <a href="data/audio_sample.mp3" target="_blank">play</a></li>
+      <li><code>css/style.css</code> <span class="tag">css 13KB</span> <a href="css/style.css" target="_blank">open</a></li>
+    </ul>
+    <pre>curl -k -O https://localhost:4443/data/random.bin
+curl -k -I https://localhost:4443/data/dummy.pdf</pre>
+  </section>
+
+  <!-- HOWTO -->
+  <section class="host" id="howto" style="grid-column:span 2;background:#0a0a0a;border-color:#38bdf8">
+    <h2><i>06</i> How to test HTTP</h2>
+    <p>Каждый файл выше — живой HTTPS endpoint. Используй браузер, curl, fetch, Postman.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+      <div class="card" style="background:#111"><h3>F12 Network</h3><p>Reload → 30+ requests: html, css, 20 imgs, 2 videos, json. Click → Headers, Response, Timing, Size.</p></div>
+      <div class="card" style="background:#111"><h3>curl -k</h3><p><code>-k</code> ignore self-signed cert. <code>-I</code> headers only.</p></div>
+      <div class="card" style="background:#111"><h3>Server log</h3><p>Console where <code>python3 server.py</code> — logs <code>GET /path HTTP/1.1 200</code></p></div>
+    </div>
+    <pre>curl -k -i https://localhost:4443/texts/russian.txt
+curl -k -i https://localhost:4443/images/wide.jpg
+curl -k https://localhost:4443/data/large.json | jq .
+# 404 test: curl -k -i https://localhost:4443/notfound</pre>
+    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+      <a href="hello.html" class="dean-btn solid" style="display:inline-block">hello.html → plain second page</a>
+      <a href="texts/big.txt" class="dean-btn" style="display:inline-block">big.txt 55KB</a>
+      <a href="notfound_test_404.html" class="dean-btn" style="display:inline-block">trigger 404</a>
+    </div>
+  </section>
+
+</div>
+
+<footer style="max-width:1100px;margin:30px auto 0;padding:20px 18px;border-top:2px solid #222;text-align:center;color:#666">
+  <div style="font-family:Unbounded;font-weight:900;text-transform:uppercase;font-size:22px;color:#fff">ДАТАХОСТ // TSTU</div>
+  <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-top:6px">Сайт-датахост для HTTP запросов · Dark · https://localhost:4443 · 55 files · 3MB · Inspired by fitulki.ru but NOT clone — own DataHost concept</div>
+  <div style="margin-top:10px"><span class="badge">python3 server.py</span> <span class="badge">cert.pem self-signed</span> <span class="badge">Tver State Tech 2026</span></div>
+</footer>
+
+<script>
+const b=document.getElementById('burger'),d=document.getElementById('dropdown');
+b.addEventListener('click',e=>{e.stopPropagation();b.classList.toggle('open');d.classList.toggle('open')});
+document.addEventListener('click',e=>{if(!d.contains(e.target)&&!b.contains(e.target)){b.classList.remove('open');d.classList.remove('open')}});
+d.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{b.classList.remove('open');d.classList.remove('open')}))
+</script>
+</body>
+</html>

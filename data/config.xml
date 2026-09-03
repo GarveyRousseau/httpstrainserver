@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <university>ТвГТУ</university>
+  <faculty>ФИТ</faculty>
+  <https port="4443" cert="cert.pem"/>
+  <testData count="50"/>
+</config>

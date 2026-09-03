@@ -1,0 +1,9 @@
+university: ТвГТУ
+faculty: ФИТ
+server:
+  https: true
+  port: 4443
+test_data:
+  - images: 20
+  - texts: 12
+  - videos: 2

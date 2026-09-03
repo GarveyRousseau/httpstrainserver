@@ -1,0 +1,5 @@
+Extra English text for HTTPS testing.
+Tver State Technical University — TSTU.
+Faculty of Information Technology — FIT.
+This file tests UTF-8, Content-Type, Content-Length, caching.
+Try: curl -k -i https://localhost:4443/texts/en_extra.txt
